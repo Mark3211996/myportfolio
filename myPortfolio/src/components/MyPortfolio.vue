@@ -69,9 +69,9 @@
       <div class="about-info">
         <h2>About <span>Me</span></h2>
         <br>
-        <h4>Who I Am</h4>
+        <h4>Who I Am??</h4>
         <p>
-         I am Mark Louie Abaca,a 27 years old and a 4th year bsit student!, im a silent boy
+         I am Mark Louie Abaca,a 27 years old and a 4th year bsit student! Im a silent boy
          and always motivated, i love to research something that is unexplainable matter
          and im not a pro in coding, but it comes
          in styling and planning that is my field.
