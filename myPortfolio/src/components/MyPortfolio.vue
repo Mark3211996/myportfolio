@@ -15,7 +15,9 @@
         <a href="#" style="--i: 1" class="active">Home</a>
         <a href="#about" style="--i: 2">About</a>
         <a href="#skills" style="--i: 3">Skill</a>
+        <a href="#todo-list" style="--i: 3">Todo</a>
         <a href="#contact" style="--i: 5">Contact</a>
+        
       </nav>
     </header>
 
@@ -23,6 +25,7 @@
       <div class="home-content">
         <h3>Hello!! im</h3>
         <h1>Mark Louie Abaca</h1>
+        <h3>BSIT student</h3>
         
         <p>Web Designer</p>
 
@@ -78,7 +81,6 @@
     </section>
 
     <section style="display: flex; height: 100vh">
-      <!-- <h1 className="sub-title" style="font-size: 50px; margin-bottom: -20px;">My <span>Skills</span></h1> -->
       <div class="container1" id="skills">
         <h1 class="heading1">My <span style="color: #0ef">Skills</span></h1>
         <div class="technical-bars">
@@ -94,12 +96,55 @@
         </div>
       </div>
 
+    </section>
+    <section id="todo-list">
+      <div class="todo-container">
+        <div class="todo-body">
+          <h1>Todo List App</h1>
+          <div class="input-list">
+            <div class="search-list">
+              <input
+                type="text"
+                v-model="searchText"
+                placeholder="Search Todo..."
+              />
+              <i class="bx bx-search-alt-2"></i>
+            </div>
+          </div>
+          <div v-for="(todo, index) in todos" :key="index" class="todo-list">
+            <p :class="{ completed: todo.completed }">{{ todo.text }}</p>
+            <!-- <div> -->
+            <i @click="toggleCompletionStatus(index)" class="bx bx-check"></i>
+            <i
+              @click="removeTodo(index)"
+              class="bx bx-x"
+              v-if="!todo.completed"
+            ></i>
+            <!-- </div> -->
+          </div>
+          <div class="clear-all"><button @click="clearAll" v-if="incompleteTodosExist">Clear All</button></div>
+
+          <div class="add-todo">
+            <h1>Add New List</h1>
+            <div class="new-input">
+              <input
+                type="text"
+                v-model="newTodo"
+                placeholder="Write Here..."
+              />
+              <i @click="addTodo" class="bx bx-plus"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
       <div class="contact-form" id="contact">
        <form action="/">
             <div class="title">
               <h2>Contact me</h2>
             </div>
-            <div class="info">
+            <div>
               <input class="fname" type="text" name="name" placeholder="Full name">
               <input type="text" name="name" placeholder="Email">
               <input type="text" name="name" placeholder="Phone number">
@@ -110,11 +155,11 @@
      </div>
   
 
-    </section>
+    
 
     <div>
       <div class="last-text">
-        <p>© Copyright 2023</p>
+        <p>copy right ~~ year 2023</p>
       </div>
     </div>
   </div>
@@ -138,16 +183,17 @@ export default {
   data() {
     return {
       navBar: false,
-      
-      socialLinks: {
-        facebook: "#",
-        twitter: "#",
-        instagram: "#",
-      },
-      name: "",
-      email: "",
-      message: "",
       searchText: "",
+      newTodo: "",
+      todos: [
+        {
+          text: "sample!",
+        },
+        {
+          text: "sample2",
+        },
+        { text: "sample3" },
+      ],
       skills: [
         {
           name: "HTML",
@@ -170,6 +216,11 @@ export default {
       ],
     };
   },
+  computed: {
+    incompleteTodosExist() {
+      return this.todos.some((todo) => !todo.completed || todo.completed);
+    },
+  },
   methods: {
     toggleNavBar() {
       this.navBar = !this.navBar;
@@ -179,6 +230,25 @@ export default {
     },
     submitForm() {
       // Handle form submission here
+    },
+    addTodo() {
+      if (this.newTodo.trim() !== "") {
+        this.todos.push({ text: this.newTodo });
+        this.newTodo = "";
+      }
+    },
+    removeTodo(index) {
+      this.todos.splice(index, 1);
+    },
+
+    toggleCompletionStatus(index) {
+      this.todos[index].completed = !this.todos[index].completed;
+    },
+
+    clearAll() {
+      this.todos = this.todos.filter(
+        (todo) => !todo.completed && todo.completed
+      );
     },
   },
 };
